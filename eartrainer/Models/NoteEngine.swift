@@ -88,11 +88,22 @@ class NoteEngine {
             /// Start the engine before loading soundbank
             try engine.start()
 
+            if let resourcePath = Bundle.main.resourcePath {
+                let soundFontFolder = "\(resourcePath)/SoundFonts"
+                do {
+                    let contents = try FileManager.default.contentsOfDirectory(atPath: soundFontFolder)
+                    print("Contents of SoundFonts:", contents)
+                } catch {
+                    print("Failed to list SoundFonts folder:", error)
+                }
+            }
+            
             if let soundbankURL = Bundle.main.url(
                 forResource: "Casio_Privia_PX-160",
                 withExtension: "sf2",
                 subdirectory: "SoundFonts"
             ) {
+                print("SoundFont path: \(soundbankURL.path)")
                 try sampler.loadSoundBankInstrument(
                     at: soundbankURL,
                     program: 0,
