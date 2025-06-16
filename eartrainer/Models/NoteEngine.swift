@@ -1,5 +1,5 @@
 //
-//  ToneGenerator.swift
+//  NoteEngine.swift
 //  eartrainer
 //
 //  Created by Zachary Fertig on 6/10/25.
@@ -87,27 +87,16 @@ class NoteEngine {
         do {
             /// Start the engine before loading soundbank
             try engine.start()
-
-            if let resourcePath = Bundle.main.resourcePath {
-                let soundFontFolder = "\(resourcePath)/SoundFonts"
-                do {
-                    let contents = try FileManager.default.contentsOfDirectory(atPath: soundFontFolder)
-                    print("Contents of SoundFonts:", contents)
-                } catch {
-                    print("Failed to list SoundFonts folder:", error)
-                }
-            }
             
             if let soundbankURL = Bundle.main.url(
-                forResource: "Casio_Privia_PX-160",
-                withExtension: "sf2",
-                subdirectory: "SoundFonts"
+                forResource: "HappyMellow",
+                withExtension: ".sf2"
             ) {
-                print("SoundFont path: \(soundbankURL.path)")
+                //print("SoundFont path: \(soundbankURL.path)")
                 try sampler.loadSoundBankInstrument(
                     at: soundbankURL,
                     program: 0,
-                    bankMSB: 0x00,
+                    bankMSB: UInt8(kAUSampler_DefaultMelodicBankMSB),
                     bankLSB: 0x00
                 )
             } else {

@@ -24,7 +24,7 @@ class NoteViewModel: ObservableObject {
     
     // MARK: - Published Computed Properties
     /// The currently selected low octave range, default to 3 min -1, exposed to the UI
-    /// Makes sure that lowOctave.value is never higher than highOctave.vale
+    /// Makes sure that lowOctave.value is never higher than highOctave.value
     @Published var lowOctave: Int = 3 {
         didSet {
             if lowOctave > highOctave { highOctave = lowOctave }
@@ -32,7 +32,7 @@ class NoteViewModel: ObservableObject {
         }
     }
     /// The currently selected high octave range, default to 6 max 9, exposed to the UI
-    /// Makes sure that highOctave.value is never lower than lowOctave.vale
+    /// Makes sure that highOctave.value is never lower than lowOctave.value
     @Published var highOctave: Int = 6 {
         didSet {
             if highOctave < lowOctave { lowOctave = highOctave }

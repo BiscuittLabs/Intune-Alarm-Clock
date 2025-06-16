@@ -42,6 +42,6 @@ struct Note: Identifiable, Codable {
     }
     /// Validates that frequency and octave are within realistic bounds
     var isValid: Bool {
-        return frequency > 0 && (0...10).contains(octave)
+        return frequency > 0 && (-1...9).contains(octave)
     }
 }
