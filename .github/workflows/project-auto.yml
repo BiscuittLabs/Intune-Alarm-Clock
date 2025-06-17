@@ -2,15 +2,49 @@ name: Auto Project Card Mover
 
 on:
   pull_request:
-    types: [opened, closed, reopened, ready_for_review]
+    types: [opened, closed, reopened, ready_for_review, labeled]
+  issues:
+    types: [opened, labeled]
 
 jobs:
-  update-project-card:
+  move-pr-cards:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
       - name: Move PR to In Review or Done
         uses: alex-page/github-project-automation-plus@v0.9.0
         with:
           project: Ear Trainer Roadmap
           column: ${{ github.event.action == 'closed' && 'Done' || 'In Review' }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Archive Done PR Cards
+        if: github.event.action == 'closed'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const projectName = 'Ear Trainer Roadmap';
+            const columnName = 'Done';
+            // Placeholder: Archiving logic would go here if supported
+            console.log(`Simulating archive of card in '${columnName}' for '${projectName}'`);
+
+  move-issue-cards:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues'
+    steps:
+      - name: Move new issues to Backlog
+        if: github.event.action == 'opened'
+        uses: alex-page/github-project-automation-plus@v0.9.0
+        with:
+          project: Ear Trainer Roadmap
+          column: Backlog
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Move labeled issues to appropriate columns
+        if: github.event.action == 'labeled'
+        uses: alex-page/github-project-automation-plus@v0.9.0
+        with:
+          project: Ear Trainer Roadmap
+          column: ${{ github.event.label.name == 'feature' && 'Todo' || github.event.label.name == 'enhancement' && 'In Progress' || github.event.label.name == 'bug' && 'Todo' || 'Backlog' }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
