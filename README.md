@@ -1,114 +1,115 @@
-# 🎷 Ear Trainer
+# 🎵 Intune Alarm Clock (formerly Intune-Alarm-Clock)
 
-A SwiftUI app for practicing pitch recognition and note training using custom SoundFonts. Designed for musicians, students, and anyone wanting to sharpen their ear with beautiful tones instead of basic sine waves.
+A musical alarm app where you **must identify a note, chord, or melody** to turn off the alarm. Built to sharpen your pitch recognition, train perfect pitch, and start your day with focus.
 
 ---
 
-## 🧠 Overview
+## 📚 Overview
 
-**Ear Trainer** plays a randomly selected musical note and challenges the user to identify it by ear. The app uses `AVAudioUnitSampler` to load realistic instrument samples from SoundFont files (`.sf2`).
+Instead of tapping "Snooze", this app only lets you dismiss the alarm by accurately naming the **musical sound** it plays. It’s like ear training meets morning motivation.
 
 ---
 
 ## 🚀 Features
 
-- 🎵 Random note playback (with adjustable octave and frequency)
-- 🧠 Note identification training
-- 🎺 Supports custom SoundFont files (`.sf2`)
-- ⚙️ Configurable playback engine (sampler or sine wave fallback)
-- 💡 SwiftUI-based user interface
+- ⏰ **Musical Alarm** — Plays a random note, chord, or melody string
+- 🌟 **Pitch Challenge** — You must guess correctly to silence it
+- 🔄 **Progressive difficulty** — (future release)
+- 🔊 **Custom SoundFonts** — Load your own `.sf2` instrument banks
 
 ---
 
 ## 💠 Requirements
 
-- Xcode 15+
-- iOS 16+
-- Swift 5.9+
-- `.sf2` SoundFont files (e.g. custom piano, synths, etc.)
+- iOS 16+, Swift 5.9, Xcode 15+
+- SoundFont files (`.sf2`) placed in a blue `SoundFonts/` folder reference
+- iPhone or Simulator for testing audio
 
 ---
 
-## 🧹 Architecture
-
-This project is organized into MVVM-style modules:
+## 🧹 Project Structure
 
 ```
-EarTrainer/
-🔻— Models/           # Note logic, sampler engine, etc.
-🔻— ViewModels/       # State + logic for note UI
-🔻— Views/            # SwiftUI views
-🔻— SoundFonts/       # Your .sf2 files (folder reference!)
-```
-
-- Audio powered by `AVAudioEngine` + `AVAudioUnitSampler`
-- UI built with SwiftUI + Combine
-- Code is modular and testable
-
----
-
-## 🎺 SoundFont Setup
-
-To add a custom `.sf2` SoundFont:
-
-1. Place the `.sf2` file inside the `SoundFonts` folder.
-2. In Xcode, drag the folder into the project.
-3. **Important**: When prompted, select **"Create folder references"** (not "Create groups").
-4. Ensure the file is checked under **Target Membership**.
-5. In code, load it like this:
-
-```swift
-try sampler.loadSoundBankInstrument(
-  at: soundbankURL,
-  program: 0,
-  bankMSB: 0x79, // melodic
-  bankLSB: 0x00
-)
+Intune-Alarm-Clock/
+🔻— SoundFonts/      # .sf2 files (folder reference)
+🔻— Models/          # Audio logic, pitch checks
+🔻— Views/           # SwiftUI alarm UI
+🔻— ViewModels/      # Alarm state & logic
+🔻— Resources/       # Assets and voice prompts
 ```
 
 ---
 
-## 🏁 Getting Started
+## 🎺 SoundFont Support
 
-1. Clone the repo:
+To use custom instruments:
+
+1. Add `.sf2` files into `SoundFonts/`
+2. Drag the folder into Xcode as a **folder reference** (blue icon)
+3. Ensure target membership is checked
+4. Load them using `AVAudioUnitSampler`
+
+---
+
+## 🚀 Getting Started
+
+1. Clone:
 
    ```bash
-   git clone https://github.com/yourusername/eartrainer.git
-   cd eartrainer
+   git clone https://github.com/BiscuittLabs/Intune-Alarm-Clock.git
+   cd Intune-Alarm-Clock
    ```
 
-2. Open the project in Xcode:
+2. Open in Xcode:
 
    ```bash
-   open EarTrainer.xcodeproj
+   open Intune-Alarm-Clock.xcodeproj
    ```
 
-3. Add your `.sf2` files to the `SoundFonts/` folder.
+3. Add your `.sf2` files into `SoundFonts/`
 
-4. Run the app on the iOS Simulator or a real device.
-
----
-
-## 🧚️‍♂️ Testing
-
-- Use the built-in `eartrainerTests` and `eartrainerUITests` folders to add your unit/UI tests.
-- Test the audio system by simulating different note generations and playback modes.
+4. Build & Run on your iPhone or Simulator
 
 ---
 
-## 📜 License
+## 🌟 Usage
 
-MIT License. See `LICENSE.md` for details.
-
----
-
-## 🙌 Acknowledgments
-
-- Apple Core Audio team for `AVAudioUnitSampler`
-- [Polyphone SoundFont Editor](https://www.polyphone-soundfonts.com/) for inspecting `.sf2` files
-- CodeAcademy for closure-driven functional programming inspiration
+- Set an alarm time
+- At alarm time, hear a musical snippet
+- Guess the pitch, chord, or melody
+- Correct answer = dismiss; incorrect = try again
 
 ---
 
-💠 Built with love and Swift.
+## 🧪 Development
+
+- Work from `main` or use feature branches
+- Follow developer workflow outlined in `git_workflow.md`
+- Share issues / feature ideas via GitHub issues
+- Use SoundFonts to change instruments and challenge types
+
+---
+
+## 📅 Roadmap
+
+Planned enhancements in future releases:
+
+- Multiple challenge types (chords, melodies, scales)
+- Settings: difficulty, instrument choice, snooze policies
+- Persistence & user stats tracking
+- Notifications & iOS alarm integration
+
+See `CHANGELOG.md` for version history.
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Please see `CONTRIBUTING.md` for bug reports, feature requests, and pull request guidelines.
+
+---
+
+## 📄 License
+
+Licensed under MIT — see `LICENSE.md` for details.
 
