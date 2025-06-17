@@ -1,0 +1,39 @@
+{
+  "name": "Ear Trainer Roadmap",
+  "description": "Project board to track development and planning of the Ear Trainer app.",
+  "columns": [
+    {
+      "name": "Backlog",
+      "cards": [
+        { "note": "Idea: Add chord recognition mode" },
+        { "note": "Feature: Support user-recorded SoundFonts" }
+      ]
+    },
+    {
+      "name": "Todo",
+      "cards": [
+        { "note": "Bug: Fix sampler load error with invalid program" },
+        { "note": "Feature: Add SoundFont picker UI" }
+      ]
+    },
+    {
+      "name": "In Progress",
+      "cards": [
+        { "note": "Enhancement: Improve random note logic" }
+      ]
+    },
+    {
+      "name": "In Review",
+      "cards": [
+        { "note": "Testing: Add unit tests for NotePlayer" }
+      ]
+    },
+    {
+      "name": "Done",
+      "cards": [
+        { "note": "Initial build with AVAudioUnitSampler and basic UI" }
+      ]
+    }
+  ]
+}
+
