@@ -101,6 +101,7 @@ class NoteEngine {
                 )
             } else {
                 print("SoundFont file not found.")
+                createSineSourceNode()
             }
         } catch {
             print("Failed to start audio engine: \(error.localizedDescription)")
