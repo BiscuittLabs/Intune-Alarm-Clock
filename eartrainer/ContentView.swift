@@ -7,11 +7,19 @@
 
 import SwiftUI
 
+/// # The root view for the Ear Trainer app
 struct ContentView: View {
+
+    ///-------------------------------------------------------------------------------------------------------
+    // MARK: - View Body
+
     var body: some View {
         RandomNoteView()
     }
 }
+
+///-------------------------------------------------------------------------------------------------------
+// MARK: - Preview
 
 #Preview {
     ContentView()

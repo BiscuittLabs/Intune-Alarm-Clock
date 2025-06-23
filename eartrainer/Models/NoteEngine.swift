@@ -7,45 +7,59 @@
 
 import AVFoundation
 
-/// #A class for generating tones using AVAudioEngine and AVAudioSourceNode
+/// # A class for generating tones using AVAudioEngine and AVAudioSourceNode
 class NoteEngine {
-    // MARK: - Calculated Properties
+
+    // MARK: - Playback Modes
+
     /// Modes for audio playback: sine wave or sampled instrument
     enum PlaybackMode {
         case sine
         case sampler
     }
+
     ///-------------------------------------------------------------------------------------------------------
     // MARK: - Properties
+
     /// Current playback mode
     private let mode: PlaybackMode
+
     /// Audio engine responsible for managing audio signal flow
     private let engine = AVAudioEngine()
+
     /// Custom source node that generates audio samples programmatically
     private var sourceNode: AVAudioSourceNode?
+
     /// Sampler node for playing MIDI notes from a SoundFont
     private var sampler: AVAudioUnitSampler?
+
     /// The Note to generate
     private var note: Note
+
     /// Standard audio sample rate (samples per second)
     private let sampleRate: Double = 44100.0
+
     /// Keeps track of the waveform phase to produce a continuous sine wave
     private var theta: Float = 0.0
+
     ///-------------------------------------------------------------------------------------------------------
     // MARK: - Initialization
+
     /// #Initializes the tone generator with a specific frequency
-    init(note: Note, mode: PlaybackMode = .sine) {
+    init(note: Note, mode: PlaybackMode = .sine, soundFontName: String? = nil) {
         self.note = note
         self.mode = mode
         switch mode {
         case .sine:
             createSineSourceNode()
         case .sampler:
-            setupSamplerEngine()
+            setupSamplerEngine(using: soundFontName)
         }
     }
+
     ///-------------------------------------------------------------------------------------------------------
-    // MARK: - Methods
+    // MARK: - Engine Setup Methods
+
     /// #Creates the AVAudioSourceNode with a render block that generates sine wave samples
     private func createSineSourceNode() {
         sourceNode = AVAudioSourceNode {
@@ -60,14 +74,12 @@ class NoteEngine {
                 2.0 * Float.pi * self.note.frequency / Float(self.sampleRate)
 
             for frame in 0..<Int(frameCount) {
-                /// Generate a sine wave sample
                 let sampleVal = sin(self.theta)
                 self.theta += thetaIncrement
                 if self.theta > 2.0 * Float.pi {
                     self.theta -= 2.0 * Float.pi
                 }
 
-                /// Write the sample to each audio channel buffer
                 for buffer in ablPointer {
                     let buf = buffer.mData?.assumingMemoryBound(to: Float.self)
                     buf?[frame] = sampleVal
@@ -77,22 +89,24 @@ class NoteEngine {
             return noErr
         }
     }
+
     /// #Sets up the AVAudioUnitSampler and connects it to the engine
-    private func setupSamplerEngine() {
+    private func setupSamplerEngine(using soundFontName: String?) {
         let sampler = AVAudioUnitSampler()
         engine.attach(sampler)
         engine.connect(sampler, to: engine.mainMixerNode, format: nil)
         self.sampler = sampler
 
         do {
-            /// Start the engine before loading soundbank
             try engine.start()
-            
+
             if let soundbankURL = Bundle.main.url(
-                forResource: "HappyMellow",
-                withExtension: ".sf2"
+                forResource: soundFontName?.replacingOccurrences(
+                    of: ".sf2",
+                    with: ""
+                ),
+                withExtension: "sf2"
             ) {
-                //print("SoundFont path: \(soundbankURL.path)")
                 try sampler.loadSoundBankInstrument(
                     at: soundbankURL,
                     program: 0,
@@ -101,11 +115,35 @@ class NoteEngine {
                 )
             } else {
                 print("SoundFont file not found.")
+                createSineSourceNode()
             }
         } catch {
             print("Failed to start audio engine: \(error.localizedDescription)")
         }
     }
+
+    ///-------------------------------------------------------------------------------------------------------
+    // MARK: - Utility
+
+    /// #Loads all possible sound fonts from the main bundle
+    static func loadSoundFonts() -> [String] {
+        var availableSoundFonts = [String]()
+        if let resourcePath = Bundle.main.resourcePath {
+            do {
+                let files = try FileManager.default.contentsOfDirectory(
+                    atPath: resourcePath
+                )
+                availableSoundFonts = files.filter { $0.hasSuffix(".sf2") }
+            } catch {
+                print("⚠️ Failed to load SoundFonts: \(error)")
+            }
+        }
+        return availableSoundFonts
+    }
+
+    ///-------------------------------------------------------------------------------------------------------
+    // MARK: - Playback Controls
+
     /// #Starts playback of a note using the selected playback mode
     func play() {
         switch mode {
@@ -126,7 +164,6 @@ class NoteEngine {
                 print("Failed to start engine: \(error.localizedDescription)")
             }
         case .sampler:
-            print()
             sampler?.startNote(
                 UInt8(self.note.id),
                 withVelocity: 64,
@@ -134,6 +171,7 @@ class NoteEngine {
             )
         }
     }
+
     /// #Stops audio playback
     func stop() {
         engine.stop()

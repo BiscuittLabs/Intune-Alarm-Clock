@@ -7,43 +7,55 @@
 
 import Foundation
 
-//This struct creates an array of Note based on input
+/// # A struct that creates an array of `Note` based on the provided settings
 struct NoteGenerator {
-    ///The names of all the notes by semitone
+
+    // MARK: - Properties
+
+    /// The names of all the notes by semitone
     let noteNames = [
         "C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B",
     ]
-    ///The indicies of the whole steps only
+
+    /// The indices of the whole steps only
     let wholeStepIndices = [0, 2, 4, 5, 7, 9, 11]
 
-    //generateNotes takes a range of octaves and a boolean to include half steps or not
-    //then returns an array of type Note that fit the constraints
+    ///-------------------------------------------------------------------------------------------------------
+    // MARK: - Note Generation
+
+    /// # Generates an array of notes based on the octave range and whether to include half steps
+    ///
+    /// - Parameters:
+    ///   - octaves: The range of octaves to generate notes for
+    ///   - includeHalfSteps: Whether to include half steps (sharps/flats)
+    /// - Returns: An array of `Note` objects matching the criteria
     func generateNotes(
         octaves: ClosedRange<Int> = -1...9,
         includeHalfSteps: Bool = false
     ) -> [Note] {
-        ///Initialize the array to be returned
+
+        /// Initialize the array to be returned
         var notes = [Note]()
 
-        ///Initialize the indicies to loop over with only whole steps or all indicies based on includeHalfSteps
+        /// Determine the note indices to loop over
         let indices =
             includeHalfSteps ? Array(noteNames.indices) : wholeStepIndices
 
-        ///For  the octave range
+        /// Loop over each octave
         for octave in octaves {
-            ///And note indecies
+            /// Loop over the selected note indices
             for i in indices {
-                ///Create a Note with the appropriate name, frequency, and octave and add it to our array
+                /// Create note properties
                 let name = noteNames[i]
-                ///MIDI note number (C4 = 60 = 5 * 12 + 0)
                 let midiNote = (octave + 1) * 12 + i
-                ///Skip if MIDI note is outside valid range (0-127)
+
+                /// Skip if MIDI note is outside valid range (0-127)
                 guard midiNote <= 127 else { continue }
-                ///Frequency formula: every semitone is a factor of 2^(1/12) from the next using C4 as a reference
-                ///A4 = 440 Hz = 261.63 * 2^((69 - 60) / 12.0)
+
+                /// Calculate the frequency using the MIDI to frequency formula
                 let frequency = 440 * pow(2, Float(midiNote - 69) / 12.0)
 
-                ///Append note to Array
+                /// Append note to array
                 notes.append(
                     Note(
                         name: name,
@@ -54,6 +66,7 @@ struct NoteGenerator {
                 )
             }
         }
+
         return notes
     }
 }

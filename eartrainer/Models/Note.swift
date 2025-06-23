@@ -7,7 +7,7 @@
 
 import Foundation
 
-// A model representing a musical note with name, frequency, and octave
+/// # A model representing a musical note with name, frequency, and octave
 struct Note: Identifiable, Codable {
     // MARK: - Properties
     /// Unique identifier for use in SwiftUI views
@@ -19,15 +19,18 @@ struct Note: Identifiable, Codable {
     /// The note's octave (e.g., 4 for A4)
     var octave: Int
 
+    ///-------------------------------------------------------------------------------------------------------
     // MARK: - Initialization
-    /// Default initializer creating an A4 note
+
+    /// # Default initializer creating an A4 note
     init() {
         self.name = "A"
         self.frequency = 440.0
         self.octave = 4
         self.id = 69
     }
-    /// Custom initializer
+
+    /// # Custom initializer
     init(name: String, frequency: Float, octave: Int, id: Int) {
         self.name = name
         self.frequency = frequency
@@ -35,11 +38,14 @@ struct Note: Identifiable, Codable {
         self.id = id
     }
 
+    ///-------------------------------------------------------------------------------------------------------
     // MARK: - Computed Properties
+
     /// Description of the note for display purposes
     var description: String {
         return "\(name)\(octave) - \(String(format: "%.2f", frequency)) Hz"
     }
+
     /// Validates that frequency and octave are within realistic bounds
     var isValid: Bool {
         return frequency > 0 && (-1...9).contains(octave)
