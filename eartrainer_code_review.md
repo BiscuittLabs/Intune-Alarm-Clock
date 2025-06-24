@@ -19,8 +19,8 @@ This project provides a music training app that helps users improve their pitch 
 
 **Suggestions**:
 
-- init() defaults to A4. Consider making this explicit in documentation (Default: A4).&#x20;
-- Validate MIDI id within bounds (0–127) in custom init.
+- [ ] init() defaults to A4. Consider making this explicit in documentation (Default: A4).&#x20;
+- [ ] Validate MIDI id within bounds (0–127) in custom init.
 
 ---
 
@@ -30,8 +30,8 @@ This project provides a music training app that helps users improve their pitch 
 
 **Strengths**:
 
-- Clear separation of note generation logic.
-- Appropriately uses helper methods for frequency and MIDI mapping.
+- [ ] Clear separation of note generation logic.
+- [ ] Appropriately uses helper methods for frequency and MIDI mapping.
 
 **Suggestions**:
 
@@ -51,8 +51,8 @@ This project provides a music training app that helps users improve their pitch 
 
 **Suggestions**:
 
-- Add validation for soundFontName in setupSamplerEngine before using it.
-- Consider exposing a public method to switch notes without reinitializing NoteEngine.
+- [ ] Add validation for soundFontName in setupSamplerEngine before using it.
+- [ ]Consider exposing a public method to switch notes without reinitializing NoteEngine.
 
 ---
 
@@ -67,7 +67,7 @@ This project provides a music training app that helps users improve their pitch 
 
 **Suggestions**:
 
-- Allow injection of playback duration or engine reuse for efficiency (e.g., if multiple notes played in a session).
+- [ ] Allow injection of playback duration or engine reuse for efficiency (e.g., if multiple notes played in a session).
 
 ---
 
@@ -81,7 +81,7 @@ This project provides a music training app that helps users improve their pitch 
 
 **Suggestions**:
 
-- Could conform to Equatable or Codable if settings need to be persisted.
+- [ ] Could conform to Equatable or Codable if settings need to be persisted.
 
 ---
 
@@ -96,8 +96,8 @@ This project provides a music training app that helps users improve their pitch 
 
 **Suggestions**:
 
-- typealias PlaybackMode = NoteEngine.PlaybackMode improves readability—great use!
-- You might consider abstracting NoteGenerator usage so it's injectable for testing/mocking.
+- [ ] typealias PlaybackMode = NoteEngine.PlaybackMode improves readability—great use!
+- [ ] You might consider abstracting NoteGenerator usage so it's injectable for testing/mocking.
 
 ---
 
@@ -112,8 +112,8 @@ This project provides a music training app that helps users improve their pitch 
 
 **Suggestions**:
 
-- Add fallback when notes.randomElement() fails (e.g., log error or assert).
-- Test coverage should include guess validation and edge cases.
+- [ ] Add fallback when notes.randomElement() fails (e.g., log error or assert).
+- [ ] Test coverage should include guess validation and edge cases.
 
 ---
 
@@ -128,8 +128,8 @@ This project provides a music training app that helps users improve their pitch 
 
 **Suggestions**:
 
-- SoundFont picker inside a List might be unconventional in a Form. Consider using Form sections for consistency.
-- Disable playback mode switch if SoundFont list is empty?
+- [ ] SoundFont picker inside a List might be unconventional in a Form. Consider using Form sections for consistency.
+- [ ] Disable playback mode switch if SoundFont list is empty?
 
 ---
 
@@ -144,16 +144,16 @@ This project provides a music training app that helps users improve their pitch 
 
 **Suggestions**:
 
-- Could modularize note button sections into smaller subviews.
-- Use LazyVGrid instead of HStack for more responsive layout if note count increases.
+- [ ] Could modularize note button sections into smaller subviews.
+- [ ] Use LazyVGrid instead of HStack for more responsive layout if note count increases.
 
 ---
 
 ## 🧪 Testing Recommendations
 
-- Add unit tests for NoteGenerator (validate MIDI boundaries, frequency accuracy).
-- Test NoteGameViewModel guessing logic with mocked notes.
-- UI tests for button presses in TestingView.
+- [ ] Add unit tests for NoteGenerator (validate MIDI boundaries, frequency accuracy).
+- [ ] Test NoteGameViewModel guessing logic with mocked notes.
+- [ ] UI tests for button presses in TestingView.
 
 ---
 
@@ -161,20 +161,20 @@ This project provides a music training app that helps users improve their pitch 
 
 ### Error Handling
 
-- Add better fallback behavior in case sound fonts are missing or corrupted.
-- Check for nil sound font files earlier in the pipeline.
+- [ ] Add better fallback behavior in case sound fonts are missing or corrupted.
+- [ ] Check for nil sound font files earlier in the pipeline.
 
 ### Dependency Injection
 
-- Allow injecting NoteGenerator and NotePlayer for testing flexibility.
+- [ ] Allow injecting NoteGenerator and NotePlayer for testing flexibility.
 
 ### Performance
 
-- Consider persisting generated notes unless settings change, to avoid unnecessary regeneration.
+- [ ] Consider persisting generated notes unless settings change, to avoid unnecessary regeneration.
 
 ### Design
 
-- The ViewModels follow MVVM well. Ensure views don’t assume engine internals (you're already doing great here!).
+- [ ] The ViewModels follow MVVM well. Ensure views don’t assume engine internals (you're already doing great here!).
 
 ---
 
