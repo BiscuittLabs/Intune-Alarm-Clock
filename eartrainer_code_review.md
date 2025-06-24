@@ -30,13 +30,13 @@ This project provides a music training app that helps users improve their pitch 
 
 **Strengths**:
 
-- [ ] Clear separation of note generation logic.
-- [ ] Appropriately uses helper methods for frequency and MIDI mapping.
+- Clear separation of note generation logic.
+- Appropriately uses helper methods for frequency and MIDI mapping.
 
 **Suggestions**:
 
-- [ ] Consider caching getNoteNames(true) to avoid recomputation when filtering sharps.
-- [ ] makeNote() could fail silently if name is invalid. Maybe assert/log when index is not found.
+- [x] Consider caching getNoteNames(true) to avoid recomputation when filtering sharps.
+- [x] makeNote() could fail silently if name is invalid. Maybe assert/log when index is not found.
 
 ---
 
@@ -51,8 +51,8 @@ This project provides a music training app that helps users improve their pitch 
 
 **Suggestions**:
 
-- [ ] Add validation for soundFontName in setupSamplerEngine before using it.
-- [ ] Consider exposing a public method to switch notes without reinitializing NoteEngine.
+- [x] Add validation for soundFontName in setupSamplerEngine before using it.
+- [x] Consider exposing a public method to switch notes without reinitializing NoteEngine.
 
 ---
 
