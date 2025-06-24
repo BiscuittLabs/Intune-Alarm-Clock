@@ -69,4 +69,11 @@ struct NoteGenerator {
 
         return notes
     }
+    
+    ///  # Gets the selected note names
+    func getNoteNames(includeHalfSteps: Bool) -> [String] {
+        let allNotes = noteNames
+        let indices = includeHalfSteps ? Array(allNotes.indices) : wholeStepIndices
+        return indices.map { allNotes[$0] }
+    }
 }
