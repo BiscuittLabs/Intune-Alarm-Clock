@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-/// # A view for adjusting note generation settings
+/// # A view for adjusting note generation and playback settings
+/// This interface allows users to customize note generation range, playback type, and SoundFont selection
 struct SettingsView: View {
 
     // MARK: - Observed Object
 
-    /// ViewModel managing settings logic and state
-    @ObservedObject var viewModel: NoteViewModel
+    /// ViewModel managing the user settings and their effects
+    @ObservedObject var viewModel: NoteSettingsViewModel
 
-    ///-------------------------------------------------------------------------------------------------------
     // MARK: - View Body
 
     var body: some View {
@@ -23,16 +23,16 @@ struct SettingsView: View {
             Form {
                 Section(header: Text("Note Options")) {
 
-                    /// Toggle for including half steps in note generation
+                    /// Toggle for enabling or disabling half steps (sharps/flats)
                     Toggle(
                         "Include Half Steps",
                         isOn: $viewModel.includeHalfSteps
                     )
                     .onChange(of: viewModel.includeHalfSteps) {
-                        viewModel.updateNotes()
+                        viewModel.updateNotes() // Refresh notes on toggle change
                     }
 
-                    /// Octave range steppers
+                    /// Steppers for adjusting the low and high octave bounds
                     VStack(alignment: .leading) {
                         Stepper(
                             "Low Octave: \(viewModel.lowOctave)",
@@ -47,23 +47,18 @@ struct SettingsView: View {
                     }
                     .padding(.vertical)
 
-                    /// Playback mode picker
-                    Picker("Playback Mode", selection: $viewModel.playbackMode)
-                    {
-                        Text("Sine Wave").tag(NoteViewModel.PlaybackMode.sine)
-                        Text("Sampler").tag(NoteViewModel.PlaybackMode.sampler)
+                    /// Picker to choose between playback types: sine wave or sample-based
+                    Picker("Playback Mode", selection: $viewModel.playbackMode) {
+                        Text("Sine Wave").tag(NoteSettingsViewModel.PlaybackMode.sine)
+                        Text("Sampler").tag(NoteSettingsViewModel.PlaybackMode.sampler)
                     }
                     .pickerStyle(SegmentedPickerStyle())
 
-                    /// SoundFont picker (only visible when using sampler)
+                    /// Conditional UI: Display SoundFont picker only when using sampler mode
                     if viewModel.playbackMode == .sampler {
                         List {
                             Picker(selection: $viewModel.selectedSoundFont) {
-                                ForEach(
-                                    viewModel.availableSoundFonts,
-                                    id: \.self
-                                ) {
-                                    font in
+                                ForEach(viewModel.availableSoundFonts, id: \.self) { font in
                                     Text(font).tag(font)
                                 }
                             } label: {
@@ -75,15 +70,14 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .onAppear {
-                viewModel.updateSoundFonts()
+                viewModel.updateSoundFonts() // Ensure fonts are loaded on view entry
             }
         }
     }
 }
 
-///-------------------------------------------------------------------------------------------------------
 // MARK: - Preview
 
 #Preview {
-    SettingsView(viewModel: NoteViewModel())
+    SettingsView(viewModel: NoteSettingsViewModel())
 }

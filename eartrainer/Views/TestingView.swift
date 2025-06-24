@@ -8,75 +8,42 @@
 import SwiftUI
 
 /// # The main practice view for playing and identifying random musical notes
+/// This screen allows users to hear a note and guess its name. It provides feedback and the option to retry or generate a new note.
 struct TestingView: View {
 
     // MARK: - State
 
-    /// ViewModel managing note logic and user interaction
-    @StateObject private var viewModel = NoteViewModel()
+    /// ViewModel for managing settings like playback mode, note range, and SoundFonts
+    @StateObject private var settings = NoteSettingsViewModel()
 
-    ///-------------------------------------------------------------------------------------------------------
+    /// ViewModel for managing game logic like current note and guess checking
+    @StateObject private var game = NoteGameViewModel()
+
     // MARK: - View Body
 
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
 
-                /// Display current note description
-                if let correct = viewModel.guessedCorrectly {
-                    Text(correct ? "✅ Correct!" : "❌ Try again!")
+                /// Displays either the note (after guess) or a prompt to listen and guess
+                if let guessed = game.guessedCorrectly {
+                    Text(game.currentNote.description)
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
+                        .padding()
+                        .foregroundColor(guessed ? .green : .red) // color feedback
+                } else {
+                    Text("Listen and Guess")
                         .font(.title2)
-                        .foregroundColor(correct ? .green : .red)
-
-                    Text(viewModel.currentNote.description)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .padding()
                 }
 
+                /// Interactive note guessing buttons (natural and sharp)
+                noteGuessingButtons
 
-                Spacer()
-
-                VStack(spacing: 12) {
-                    Text("Guess the Note:")
-                        .font(.headline)
-
-                    /// Display whole note button choices
-                    HStack {
-                        ForEach(viewModel.naturalNotes, id: \.self) { name in
-                            Button(action: {
-                                viewModel.checkUserGuess(name)
-                                //print("Guessed: \(name)")
-                            }) {
-                                Text(name)
-                                    .padding(8)
-                                    .background(Color.blue.opacity(0.2))
-                                    .cornerRadius(8)
-                            }
-                        }
-                    }
-
-                    /// Display half step button choices conditionally
-                    if viewModel.includeHalfSteps {
-                        HStack {
-                            ForEach(viewModel.sharpNotes, id: \.self) { name in
-                                Button(action: {
-                                    //print("Guessed: \(name)")
-                                }) {
-                                    Text(name)
-                                        .padding(8)
-                                        .background(Color.purple.opacity(0.2))
-                                        .cornerRadius(8)
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal)
-
-                /// Button to play the selected note again
+                /// Replay the current note
                 Button("Play Note Again") {
-                    viewModel.playSelectedNote()
-                    //print(viewModel.selectedSoundFont)
+                    game.playSelectedNote(using: settings.playback)
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -84,11 +51,13 @@ struct TestingView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 .padding(.horizontal)
-                
-                /// Button to play a random note
+
+                /// Generate and play a new random note
                 Button("Play a Random Note") {
-                    viewModel.playRandomNote()
-                    //print(viewModel.selectedSoundFont)
+                    game.playRandomNote(
+                        from: settings.notes,
+                        using: settings.playback
+                    )
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -97,20 +66,56 @@ struct TestingView: View {
                 .cornerRadius(10)
                 .padding(.horizontal)
 
-                /// Link to settings view
+                /// Navigate to the settings screen
                 NavigationLink("Settings") {
-                    SettingsView(viewModel: viewModel)
+                    SettingsView(viewModel: settings)
                 }
                 .padding()
 
                 Spacer()
             }
-            .navigationTitle("Ear Trainer")
+            .navigationTitle("Guess the Note")
+        }
+    }
+
+    /// Buttons for guessing notes
+    private var noteGuessingButtons: some View {
+        VStack {
+            /// Buttons for natural notes
+            HStack {
+                ForEach(settings.naturalNotes, id: \.self) { noteName in
+                    Button(action: {
+                        game.checkUserGuess(noteName)
+                        game.playNoteGuess(noteName, using: settings.playback)
+                    }) {
+                        Text(noteName)
+                            .padding(8)
+                            .background(Color.blue.opacity(0.2))
+                            .cornerRadius(8)
+                    }
+                }
+            }
+
+            /// Additional buttons for sharp notes (if enabled)
+            if settings.includeHalfSteps {
+                HStack {
+                    ForEach(settings.sharpNotes, id: \.self) { noteName in
+                        Button(action: {
+                            game.checkUserGuess(noteName)
+                            game.playNoteGuess(noteName, using: settings.playback)
+                        }) {
+                            Text(noteName)
+                                .padding(8)
+                                .background(Color.blue.opacity(0.2))
+                                .cornerRadius(8)
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
-///-------------------------------------------------------------------------------------------------------
 // MARK: - Preview
 
 #Preview {

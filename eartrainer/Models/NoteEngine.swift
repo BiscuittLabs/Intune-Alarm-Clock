@@ -7,45 +7,48 @@
 
 import AVFoundation
 
-/// # A class for generating tones using AVAudioEngine and AVAudioSourceNode
+/// # A class for generating tones using AVFoundation
+/// Supports two playback modes: generated sine waves and sampled instruments using SoundFonts
 class NoteEngine {
 
     // MARK: - Playback Modes
 
-    /// Modes for audio playback: sine wave or sampled instrument
+    /// Enum to switch between synthesis and sampled playback
     enum PlaybackMode {
-        case sine
-        case sampler
+        case sine      // Generate tone programmatically
+        case sampler   // Play pre-recorded sound from a SoundFont
     }
 
-    ///-------------------------------------------------------------------------------------------------------
     // MARK: - Properties
 
-    /// Current playback mode
+    /// Which mode to use for audio playback
     private let mode: PlaybackMode
 
-    /// Audio engine responsible for managing audio signal flow
+    /// Core AVFoundation audio engine that routes sound
     private let engine = AVAudioEngine()
 
-    /// Custom source node that generates audio samples programmatically
+    /// Custom node for generating sine wave samples
     private var sourceNode: AVAudioSourceNode?
 
-    /// Sampler node for playing MIDI notes from a SoundFont
+    /// Sampler node that plays MIDI notes using SoundFont
     private var sampler: AVAudioUnitSampler?
 
-    /// The Note to generate
+    /// Note object containing frequency and other info
     private var note: Note
 
-    /// Standard audio sample rate (samples per second)
+    /// Audio sampling rate in Hz (standard for audio)
     private let sampleRate: Double = 44100.0
 
-    /// Keeps track of the waveform phase to produce a continuous sine wave
+    /// Current phase of the sine wave (used for continuous waveform)
     private var theta: Float = 0.0
 
-    ///-------------------------------------------------------------------------------------------------------
     // MARK: - Initialization
 
-    /// #Initializes the tone generator with a specific frequency
+    /// # Create a NoteEngine to play a single note
+    /// - Parameters:
+    ///   - note: The musical note to generate
+    ///   - mode: Whether to use sine wave or sample playback
+    ///   - soundFontName: Optional name of a .sf2 file for sampler mode
     init(note: Note, mode: PlaybackMode = .sine, soundFontName: String? = nil) {
         self.note = note
         self.mode = mode
@@ -57,21 +60,14 @@ class NoteEngine {
         }
     }
 
-    ///-------------------------------------------------------------------------------------------------------
     // MARK: - Engine Setup Methods
 
-    /// #Creates the AVAudioSourceNode with a render block that generates sine wave samples
+    /// # Build an audio node that generates sine wave samples in real time
     private func createSineSourceNode() {
         sourceNode = AVAudioSourceNode {
-            _,
-            _,
-            frameCount,
-            audioBufferList -> OSStatus in
-            let ablPointer = UnsafeMutableAudioBufferListPointer(
-                audioBufferList
-            )
-            let thetaIncrement =
-                2.0 * Float.pi * self.note.frequency / Float(self.sampleRate)
+            _, _, frameCount, audioBufferList in
+            let ablPointer = UnsafeMutableAudioBufferListPointer(audioBufferList)
+            let thetaIncrement = 2.0 * Float.pi * self.note.frequency / Float(self.sampleRate)
 
             for frame in 0..<Int(frameCount) {
                 let sampleVal = sin(self.theta)
@@ -90,7 +86,7 @@ class NoteEngine {
         }
     }
 
-    /// #Sets up the AVAudioUnitSampler and connects it to the engine
+    /// # Sets up the sampler with the provided SoundFont
     private func setupSamplerEngine(using soundFontName: String?) {
         let sampler = AVAudioUnitSampler()
         engine.attach(sampler)
@@ -101,10 +97,7 @@ class NoteEngine {
             try engine.start()
 
             if let soundbankURL = Bundle.main.url(
-                forResource: soundFontName?.replacingOccurrences(
-                    of: ".sf2",
-                    with: ""
-                ),
+                forResource: soundFontName?.replacingOccurrences(of: ".sf2", with: ""),
                 withExtension: "sf2"
             ) {
                 try sampler.loadSoundBankInstrument(
@@ -114,25 +107,22 @@ class NoteEngine {
                     bankLSB: 0x00
                 )
             } else {
-                print("SoundFont file not found.")
+                print("⚠️ SoundFont file not found, defaulting to sine wave.")
                 createSineSourceNode()
             }
         } catch {
-            print("Failed to start audio engine: \(error.localizedDescription)")
+            print("❌ Failed to start audio engine: \(error.localizedDescription)")
         }
     }
 
-    ///-------------------------------------------------------------------------------------------------------
     // MARK: - Utility
 
-    /// #Loads all possible sound fonts from the main bundle
+    /// # Returns all `.sf2` files in the app's main bundle
     static func loadSoundFonts() -> [String] {
         var availableSoundFonts = [String]()
         if let resourcePath = Bundle.main.resourcePath {
             do {
-                let files = try FileManager.default.contentsOfDirectory(
-                    atPath: resourcePath
-                )
+                let files = try FileManager.default.contentsOfDirectory(atPath: resourcePath)
                 availableSoundFonts = files.filter { $0.hasSuffix(".sf2") }
             } catch {
                 print("⚠️ Failed to load SoundFonts: \(error)")
@@ -141,10 +131,9 @@ class NoteEngine {
         return availableSoundFonts
     }
 
-    ///-------------------------------------------------------------------------------------------------------
     // MARK: - Playback Controls
 
-    /// #Starts playback of a note using the selected playback mode
+    /// # Begins playing the configured note
     func play() {
         switch mode {
         case .sine:
@@ -161,18 +150,14 @@ class NoteEngine {
             do {
                 try engine.start()
             } catch {
-                print("Failed to start engine: \(error.localizedDescription)")
+                print("❌ Failed to start engine: \(error.localizedDescription)")
             }
         case .sampler:
-            sampler?.startNote(
-                UInt8(self.note.id),
-                withVelocity: 64,
-                onChannel: 0
-            )
+            sampler?.startNote(UInt8(self.note.id), withVelocity: 64, onChannel: 0)
         }
     }
 
-    /// #Stops audio playback
+    /// # Stops playback and shuts down the engine
     func stop() {
         engine.stop()
     }

@@ -8,21 +8,27 @@
 import Foundation
 
 /// # A model representing a musical note with name, frequency, and octave
+/// Conforms to `Identifiable` for use in SwiftUI and `Codable` for saving/loading
 struct Note: Identifiable, Codable {
+    
     // MARK: - Properties
-    /// Unique identifier for use in SwiftUI views
+    
+    /// A unique identifier (MIDI number) used to distinguish notes
     var id: Int
-    /// The note's name, e.g., "A", "C♯"
+    
+    /// The name of the note (e.g., "C", "D#", "A")
     var name: String
-    /// The note's frequency in Hz
+    
+    /// Frequency of the note in Hertz (e.g., 440.0 for A4)
     var frequency: Float
-    /// The note's octave (e.g., 4 for A4)
+    
+    /// Octave number the note belongs to (e.g., 4 for A4)
     var octave: Int
 
-    ///-------------------------------------------------------------------------------------------------------
     // MARK: - Initialization
 
-    /// # Default initializer creating an A4 note
+    /// # Default initializer
+    /// Creates the standard tuning note A4 (440 Hz, MIDI id 69)
     init() {
         self.name = "A"
         self.frequency = 440.0
@@ -31,6 +37,7 @@ struct Note: Identifiable, Codable {
     }
 
     /// # Custom initializer
+    /// Allows creation of any note with specific properties
     init(name: String, frequency: Float, octave: Int, id: Int) {
         self.name = name
         self.frequency = frequency
@@ -38,15 +45,16 @@ struct Note: Identifiable, Codable {
         self.id = id
     }
 
-    ///-------------------------------------------------------------------------------------------------------
     // MARK: - Computed Properties
 
-    /// Description of the note for display purposes
+    /// # Readable string representation of the note
+    /// Format: "C4 - 261.63 Hz"
     var description: String {
         return "\(name)\(octave) - \(String(format: "%.2f", frequency)) Hz"
     }
 
-    /// Validates that frequency and octave are within realistic bounds
+    /// # Validity check for octave and frequency ranges
+    /// Ensures the note is musically meaningful
     var isValid: Bool {
         return frequency > 0 && (-1...9).contains(octave)
     }

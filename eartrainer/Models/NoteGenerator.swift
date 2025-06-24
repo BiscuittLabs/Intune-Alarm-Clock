@@ -8,54 +8,46 @@
 import Foundation
 
 /// # A struct that creates an array of `Note` based on the provided settings
+/// Provides tools for generating notes across octaves with optional half steps
 struct NoteGenerator {
 
     // MARK: - Properties
 
-    /// The names of all the notes by semitone
+    /// The names of all chromatic notes within an octave, using Unicode sharps
     let noteNames = [
-        "C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B",
+        "C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"
     ]
 
-    /// The indices of the whole steps only
+    /// The indices corresponding to natural (whole step) notes only
     let wholeStepIndices = [0, 2, 4, 5, 7, 9, 11]
 
-    ///-------------------------------------------------------------------------------------------------------
     // MARK: - Note Generation
 
-    /// # Generates an array of notes based on the octave range and whether to include half steps
+    /// # Generates an array of `Note` objects within a specified octave range
     ///
     /// - Parameters:
-    ///   - octaves: The range of octaves to generate notes for
-    ///   - includeHalfSteps: Whether to include half steps (sharps/flats)
-    /// - Returns: An array of `Note` objects matching the criteria
+    ///   - octaves: Range of octaves (e.g., 3...6)
+    ///   - includeHalfSteps: Whether to include sharps/flats
+    /// - Returns: An array of generated `Note` values
     func generateNotes(
         octaves: ClosedRange<Int> = -1...9,
         includeHalfSteps: Bool = false
     ) -> [Note] {
 
-        /// Initialize the array to be returned
         var notes = [Note]()
+        let indices = includeHalfSteps
+            ? Array(noteNames.indices)
+            : wholeStepIndices
 
-        /// Determine the note indices to loop over
-        let indices =
-            includeHalfSteps ? Array(noteNames.indices) : wholeStepIndices
-
-        /// Loop over each octave
         for octave in octaves {
-            /// Loop over the selected note indices
             for i in indices {
-                /// Create note properties
                 let name = noteNames[i]
-                let midiNote = (octave + 1) * 12 + i
+                let midiNote = getMidiNote(octave: octave, index: i)
 
-                /// Skip if MIDI note is outside valid range (0-127)
+                // Guard against exceeding MIDI note range (0–127)
                 guard midiNote <= 127 else { continue }
 
-                /// Calculate the frequency using the MIDI to frequency formula
-                let frequency = 440 * pow(2, Float(midiNote - 69) / 12.0)
-
-                /// Append note to array
+                let frequency = getFrequency(midiNote: midiNote)
                 notes.append(
                     Note(
                         name: name,
@@ -69,11 +61,42 @@ struct NoteGenerator {
 
         return notes
     }
-    
-    ///  # Gets the selected note names
+
+    // MARK: - Helper Methods
+
+    /// # Returns a list of note names (with or without half steps)
     func getNoteNames(includeHalfSteps: Bool) -> [String] {
-        let allNotes = noteNames
-        let indices = includeHalfSteps ? Array(allNotes.indices) : wholeStepIndices
-        return indices.map { allNotes[$0] }
+        let indices = includeHalfSteps
+            ? Array(noteNames.indices)
+            : wholeStepIndices
+        return indices.map { noteNames[$0] }
+    }
+
+    /// # Converts a MIDI note number to frequency using the 440 Hz formula
+    func getFrequency(midiNote: Int) -> Float {
+        return 440 * pow(2, Float(midiNote - 69) / 12.0)
+    }
+
+    /// # Converts octave and note index to MIDI note number
+    func getMidiNote(octave: Int, index: Int) -> Int {
+        return (octave + 1) * 12 + index
+    }
+
+    /// # Finds the index of a note name in the `noteNames` array
+    func getIndex(name: String) -> Int {
+        return noteNames.firstIndex(of: name) ?? 0
+    }
+
+    /// # Creates a full `Note` instance from a name and octave
+    func makeNote(name: String, octave: Int) -> Note {
+        let index = getIndex(name: name)
+        let midiNote = getMidiNote(octave: octave, index: index)
+        let frequency = getFrequency(midiNote: midiNote)
+        return Note(
+            name: name,
+            frequency: frequency,
+            octave: octave,
+            id: midiNote
+        )
     }
 }
