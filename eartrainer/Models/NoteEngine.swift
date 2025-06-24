@@ -109,6 +109,7 @@ class NoteEngine {
             } else {
                 print("⚠️ SoundFont file not found, defaulting to sine wave.")
                 createSineSourceNode()
+                return
             }
         } catch {
             print("❌ Failed to start audio engine: \(error.localizedDescription)")
@@ -160,5 +161,21 @@ class NoteEngine {
     /// # Stops playback and shuts down the engine
     func stop() {
         engine.stop()
+    }
+    
+    // MARK: - Note Management
+
+    /// # Sets a new note to be played without recreating the engine
+    /// - Parameter note: The new `Note` to assign
+    func setNote(_ note: Note) {
+        self.note = note
+        self.theta = 0.0  // Reset sine wave phase to prevent audio artifacts
+
+        // If sampler is used, optionally stop previous note
+        if mode == .sampler {
+            sampler?.stopNote(UInt8(self.note.id), onChannel: 0)
+        }
+
+        // No need to recreate sourceNode; frequency is updated on next play call
     }
 }

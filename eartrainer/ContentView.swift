@@ -14,7 +14,7 @@ struct ContentView: View {
     // MARK: - View Body
 
     var body: some View {
-        RandomNoteView()
+        TestingView()
     }
 }
 

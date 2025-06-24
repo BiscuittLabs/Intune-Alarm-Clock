@@ -10,11 +10,17 @@ import Foundation
 
 /// # A utility for playing notes using `NoteEngine`
 /// This struct abstracts the process of setting up and triggering note playback
-struct NotePlayer {
+final class NotePlayer {
+
+    // MARK: - Properties
+
+    private var engine: NoteEngine?
+    private var currentMode: NoteEngine.PlaybackMode?
+    private var currentSoundFont: String?
 
     // MARK: - Methods
 
-    /// # Plays a musical note using the specified playback configuration
+    /// # Plays a musical note using the specified playback configuration, reusing the engine if possible
     ///
     /// - Parameters:
     ///   - note: The `Note` object containing frequency, name, and octave to play
@@ -27,19 +33,30 @@ struct NotePlayer {
         mode: NoteEngine.PlaybackMode,
         soundFont: String?
     ) {
-        // Initialize the playback engine with the desired note and configuration
-        let engine = NoteEngine(
-            note: note,
-            mode: mode,
-            soundFontName: soundFont
-        )
+        /// Reuse engine if mode and soundFont match
+        if let engine = engine,
+            currentMode == mode,
+            currentSoundFont == soundFont
+        {
+            engine.setNote(note)
+            engine.play()
+        } else {
+            /// Recreate engine if playback config changed
+            engine?.stop()
+            let newEngine = NoteEngine(
+                note: note,
+                mode: mode,
+                soundFontName: soundFont
+            )
+            self.engine = newEngine
+            self.currentMode = mode
+            self.currentSoundFont = soundFont
+            newEngine.play()
+        }
 
-        // Begin playing the note
-        engine.play()
-
-        // Schedule stopping the engine after the specified duration
+        /// Schedule stopping the engine after the specified duration
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            engine.stop()
+            self.engine?.stop()
         }
     }
 }

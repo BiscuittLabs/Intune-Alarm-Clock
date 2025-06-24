@@ -52,18 +52,14 @@ class NoteSettingsViewModel: ObservableObject {
     // MARK: - Computed Note Name Lists
 
     /// Note names that represent whole steps only (e.g., C, D, E)
-    var naturalNotes: [String] {
-        generator.getNoteNames(includeHalfSteps: false)
-    }
+    var naturalNotes = [
+        "C", "D", "E", "F", "G", "A", "B",
+    ]
 
     /// Sharp/flat notes only (e.g., C♯, D♯), filtered out from full list
-    var sharpNotes: [String] {
-        includeHalfSteps
-            ? generator.getNoteNames(includeHalfSteps: true).filter {
-                !naturalNotes.contains($0)
-            }
-            : []
-    }
+    var sharpNotes = [
+        "C♯", "D♯", "F♯", "G♯", "A♯",
+    ]
 
     /// Combines playback settings for easier passing to other layers
     var playback: PlaybackSettings {
@@ -96,7 +92,8 @@ class NoteSettingsViewModel: ObservableObject {
 
     /// # Updates the list of notes when settings change
     func updateNotes() {
-        let octaveBounds = Int(octaveRange.lowerBound)...Int(octaveRange.upperBound)
+        let octaveBounds =
+            Int(octaveRange.lowerBound)...Int(octaveRange.upperBound)
         notes = generator.generateNotes(
             octaves: octaveBounds,
             includeHalfSteps: includeHalfSteps

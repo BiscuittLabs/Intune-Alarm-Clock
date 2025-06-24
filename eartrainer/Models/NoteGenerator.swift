@@ -15,7 +15,7 @@ struct NoteGenerator {
 
     /// The names of all chromatic notes within an octave, using Unicode sharps
     let noteNames = [
-        "C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"
+        "C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B",
     ]
 
     /// The indices corresponding to natural (whole step) notes only
@@ -35,7 +35,8 @@ struct NoteGenerator {
     ) -> [Note] {
 
         var notes = [Note]()
-        let indices = includeHalfSteps
+        let indices =
+            includeHalfSteps
             ? Array(noteNames.indices)
             : wholeStepIndices
 
@@ -43,19 +44,17 @@ struct NoteGenerator {
             for i in indices {
                 let name = noteNames[i]
                 let midiNote = getMidiNote(octave: octave, index: i)
-
-                // Guard against exceeding MIDI note range (0–127)
-                guard midiNote <= 127 else { continue }
-
                 let frequency = getFrequency(midiNote: midiNote)
-                notes.append(
-                    Note(
-                        name: name,
-                        frequency: frequency,
-                        octave: octave,
-                        id: midiNote
-                    )
+                let newNote = Note(
+                    name: name,
+                    frequency: frequency,
+                    octave: octave,
+                    id: midiNote
                 )
+
+                if newNote.isValid {
+                    notes.append(newNote)
+                }
             }
         }
 
@@ -66,7 +65,8 @@ struct NoteGenerator {
 
     /// # Returns a list of note names (with or without half steps)
     func getNoteNames(includeHalfSteps: Bool) -> [String] {
-        let indices = includeHalfSteps
+        let indices =
+            includeHalfSteps
             ? Array(noteNames.indices)
             : wholeStepIndices
         return indices.map { noteNames[$0] }
@@ -92,11 +92,17 @@ struct NoteGenerator {
         let index = getIndex(name: name)
         let midiNote = getMidiNote(octave: octave, index: index)
         let frequency = getFrequency(midiNote: midiNote)
-        return Note(
+        let newNote = Note(
             name: name,
             frequency: frequency,
             octave: octave,
             id: midiNote
         )
+        if newNote.isValid {
+            return newNote
+        } else {
+            print("makeNote() returned invalid Note: returning default Note()")
+            return Note()
+        }
     }
 }

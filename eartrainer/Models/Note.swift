@@ -56,6 +56,6 @@ struct Note: Identifiable, Codable {
     /// # Validity check for octave and frequency ranges
     /// Ensures the note is musically meaningful
     var isValid: Bool {
-        return frequency > 0 && (-1...9).contains(octave)
+        return frequency > 0 && (-1...9).contains(octave) && (0...127).contains(id)
     }
 }
