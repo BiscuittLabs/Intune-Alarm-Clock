@@ -51,8 +51,8 @@ This project provides a music training app that helps users improve their pitch 
 
 **Suggestions**:
 
-- [ ] Add validation for soundFontName in setupSamplerEngine before using it.
-- [ ] Consider exposing a public method to switch notes without reinitializing NoteEngine.
+- [x] Add validation for soundFontName in setupSamplerEngine before using it.
+- [x] Consider exposing a public method to switch notes without reinitializing NoteEngine.
 
 ---
 
