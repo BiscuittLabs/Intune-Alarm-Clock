@@ -24,25 +24,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		100DABB22D52A8440037DA5D /* eartrainer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eartrainer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		100DABC22D52A8480037DA5D /* eartrainerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eartrainerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		100DABCC2D52A8490037DA5D /* eartrainerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eartrainerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		100DABB22D52A8440037DA5D /* Intune Alarm Clock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Intune Alarm Clock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		100DABC22D52A8480037DA5D /* Intune Alarm ClockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Intune Alarm ClockTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		100DABCC2D52A8490037DA5D /* Intune Alarm ClockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Intune Alarm ClockUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		100DABB42D52A8440037DA5D /* eartrainer */ = {
+		100DABB42D52A8440037DA5D /* intune */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = eartrainer;
+			path = intune;
 			sourceTree = "<group>";
 		};
-		100DABC52D52A8480037DA5D /* eartrainerTests */ = {
+		100DABC52D52A8480037DA5D /* intuneTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = eartrainerTests;
+			path = intuneTests;
 			sourceTree = "<group>";
 		};
-		100DABCF2D52A8490037DA5D /* eartrainerUITests */ = {
+		100DABCF2D52A8490037DA5D /* intuneUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = eartrainerUITests;
+			path = intuneUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,9 +75,9 @@
 		100DABA92D52A8440037DA5D = {
 			isa = PBXGroup;
 			children = (
-				100DABB42D52A8440037DA5D /* eartrainer */,
-				100DABC52D52A8480037DA5D /* eartrainerTests */,
-				100DABCF2D52A8490037DA5D /* eartrainerUITests */,
+				100DABB42D52A8440037DA5D /* intune */,
+				100DABC52D52A8480037DA5D /* intuneTests */,
+				100DABCF2D52A8490037DA5D /* intuneUITests */,
 				100DABB32D52A8440037DA5D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +85,9 @@
 		100DABB32D52A8440037DA5D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				100DABB22D52A8440037DA5D /* eartrainer.app */,
-				100DABC22D52A8480037DA5D /* eartrainerTests.xctest */,
-				100DABCC2D52A8490037DA5D /* eartrainerUITests.xctest */,
+				100DABB22D52A8440037DA5D /* Intune Alarm Clock.app */,
+				100DABC22D52A8480037DA5D /* Intune Alarm ClockTests.xctest */,
+				100DABCC2D52A8490037DA5D /* Intune Alarm ClockUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		100DABB12D52A8440037DA5D /* eartrainer */ = {
+		100DABB12D52A8440037DA5D /* Intune Alarm Clock */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 100DABD62D52A8490037DA5D /* Build configuration list for PBXNativeTarget "eartrainer" */;
+			buildConfigurationList = 100DABD62D52A8490037DA5D /* Build configuration list for PBXNativeTarget "Intune Alarm Clock" */;
 			buildPhases = (
 				100DABAE2D52A8440037DA5D /* Sources */,
 				100DABAF2D52A8440037DA5D /* Frameworks */,
@@ -108,18 +108,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				100DABB42D52A8440037DA5D /* eartrainer */,
+				100DABB42D52A8440037DA5D /* intune */,
 			);
-			name = eartrainer;
+			name = "Intune Alarm Clock";
 			packageProductDependencies = (
 			);
 			productName = eartrainer;
-			productReference = 100DABB22D52A8440037DA5D /* eartrainer.app */;
+			productReference = 100DABB22D52A8440037DA5D /* Intune Alarm Clock.app */;
 			productType = "com.apple.product-type.application";
 		};
-		100DABC12D52A8480037DA5D /* eartrainerTests */ = {
+		100DABC12D52A8480037DA5D /* Intune Alarm ClockTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 100DABD92D52A8490037DA5D /* Build configuration list for PBXNativeTarget "eartrainerTests" */;
+			buildConfigurationList = 100DABD92D52A8490037DA5D /* Build configuration list for PBXNativeTarget "Intune Alarm ClockTests" */;
 			buildPhases = (
 				100DABBE2D52A8480037DA5D /* Sources */,
 				100DABBF2D52A8480037DA5D /* Frameworks */,
@@ -131,18 +131,18 @@
 				100DABC42D52A8480037DA5D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				100DABC52D52A8480037DA5D /* eartrainerTests */,
+				100DABC52D52A8480037DA5D /* intuneTests */,
 			);
-			name = eartrainerTests;
+			name = "Intune Alarm ClockTests";
 			packageProductDependencies = (
 			);
 			productName = eartrainerTests;
-			productReference = 100DABC22D52A8480037DA5D /* eartrainerTests.xctest */;
+			productReference = 100DABC22D52A8480037DA5D /* Intune Alarm ClockTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		100DABCB2D52A8490037DA5D /* eartrainerUITests */ = {
+		100DABCB2D52A8490037DA5D /* Intune Alarm ClockUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 100DABDC2D52A8490037DA5D /* Build configuration list for PBXNativeTarget "eartrainerUITests" */;
+			buildConfigurationList = 100DABDC2D52A8490037DA5D /* Build configuration list for PBXNativeTarget "Intune Alarm ClockUITests" */;
 			buildPhases = (
 				100DABC82D52A8490037DA5D /* Sources */,
 				100DABC92D52A8490037DA5D /* Frameworks */,
@@ -154,13 +154,13 @@
 				100DABCE2D52A8490037DA5D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				100DABCF2D52A8490037DA5D /* eartrainerUITests */,
+				100DABCF2D52A8490037DA5D /* intuneUITests */,
 			);
-			name = eartrainerUITests;
+			name = "Intune Alarm ClockUITests";
 			packageProductDependencies = (
 			);
 			productName = eartrainerUITests;
-			productReference = 100DABCC2D52A8490037DA5D /* eartrainerUITests.xctest */;
+			productReference = 100DABCC2D52A8490037DA5D /* Intune Alarm ClockUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +186,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 100DABAD2D52A8440037DA5D /* Build configuration list for PBXProject "eartrainer" */;
+			buildConfigurationList = 100DABAD2D52A8440037DA5D /* Build configuration list for PBXProject "Intune Alarm Clock" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -202,9 +202,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				100DABB12D52A8440037DA5D /* eartrainer */,
-				100DABC12D52A8480037DA5D /* eartrainerTests */,
-				100DABCB2D52A8490037DA5D /* eartrainerUITests */,
+				100DABB12D52A8440037DA5D /* Intune Alarm Clock */,
+				100DABC12D52A8480037DA5D /* Intune Alarm ClockTests */,
+				100DABCB2D52A8490037DA5D /* Intune Alarm ClockUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -260,12 +260,12 @@
 /* Begin PBXTargetDependency section */
 		100DABC42D52A8480037DA5D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 100DABB12D52A8440037DA5D /* eartrainer */;
+			target = 100DABB12D52A8440037DA5D /* Intune Alarm Clock */;
 			targetProxy = 100DABC32D52A8480037DA5D /* PBXContainerItemProxy */;
 		};
 		100DABCE2D52A8490037DA5D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 100DABB12D52A8440037DA5D /* eartrainer */;
+			target = 100DABB12D52A8440037DA5D /* Intune Alarm Clock */;
 			targetProxy = 100DABCD2D52A8490037DA5D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -399,10 +399,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"eartrainer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"intune/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Ear Trainer";
+				INFOPLIST_KEY_CFBundleDisplayName = "Intune Alarm Clock";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -413,7 +413,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = biscuitlabs.eartrainer;
+				PRODUCT_BUNDLE_IDENTIFIER = "biscuitlabs.intune-alarm-clock";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -428,10 +428,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"eartrainer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"intune/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Ear Trainer";
+				INFOPLIST_KEY_CFBundleDisplayName = "Intune Alarm Clock";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -442,7 +442,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = biscuitlabs.eartrainer;
+				PRODUCT_BUNDLE_IDENTIFIER = "biscuitlabs.intune-alarm-clock";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -464,7 +464,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eartrainer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/eartrainer";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Intune Alarm Clock.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Intune Alarm Clock";
 			};
 			name = Debug;
 		};
@@ -482,7 +482,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eartrainer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/eartrainer";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Intune Alarm Clock.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Intune Alarm Clock";
 			};
 			name = Release;
 		};
@@ -521,7 +521,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		100DABAD2D52A8440037DA5D /* Build configuration list for PBXProject "eartrainer" */ = {
+		100DABAD2D52A8440037DA5D /* Build configuration list for PBXProject "Intune Alarm Clock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				100DABD42D52A8490037DA5D /* Debug */,
@@ -530,7 +530,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		100DABD62D52A8490037DA5D /* Build configuration list for PBXNativeTarget "eartrainer" */ = {
+		100DABD62D52A8490037DA5D /* Build configuration list for PBXNativeTarget "Intune Alarm Clock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				100DABD72D52A8490037DA5D /* Debug */,
@@ -539,7 +539,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		100DABD92D52A8490037DA5D /* Build configuration list for PBXNativeTarget "eartrainerTests" */ = {
+		100DABD92D52A8490037DA5D /* Build configuration list for PBXNativeTarget "Intune Alarm ClockTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				100DABDA2D52A8490037DA5D /* Debug */,
@@ -548,7 +548,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		100DABDC2D52A8490037DA5D /* Build configuration list for PBXNativeTarget "eartrainerUITests" */ = {
+		100DABDC2D52A8490037DA5D /* Build configuration list for PBXNativeTarget "Intune Alarm ClockUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				100DABDD2D52A8490037DA5D /* Debug */,

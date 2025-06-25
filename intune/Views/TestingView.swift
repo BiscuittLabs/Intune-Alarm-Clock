@@ -31,7 +31,7 @@ struct TestingView: View {
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                         .padding()
-                        .foregroundColor(guessed ? .green : .red) // color feedback
+                        .foregroundColor(guessed ? .green : .red)  // color feedback
                 } else {
                     Text("Listen and Guess")
                         .font(.title2)
@@ -73,6 +73,12 @@ struct TestingView: View {
                 .padding()
 
                 Spacer()
+
+                /*
+                Text("Error Report")
+                    .font(.system(.callout, design: .monospaced))
+                    .foregroundStyle(Color.red)
+                 */
             }
             .navigationTitle("Guess the Note")
         }
@@ -102,7 +108,10 @@ struct TestingView: View {
                     ForEach(settings.sharpNotes, id: \.self) { noteName in
                         Button(action: {
                             game.checkUserGuess(noteName)
-                            game.playNoteGuess(noteName, using: settings.playback)
+                            game.playNoteGuess(
+                                noteName,
+                                using: settings.playback
+                            )
                         }) {
                             Text(noteName)
                                 .padding(8)
