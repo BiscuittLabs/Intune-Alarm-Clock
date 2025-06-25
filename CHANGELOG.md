@@ -3,6 +3,29 @@
 All notable changes to **Ear Trainer** will be documented in this file using [Semantic Versioning](https://semver.org/).
 
 ---
+## [0.1.4] - 2025-06-25
+
+### Added
+
+- PlaybackSettings model to encapsulate playback configuration
+- `setNote(_:)` method in `NoteEngine` for runtime note switching
+- `NoteGuessingViewModel` for isolated guess management
+- Detailed inline code documentation across major components
+
+### Changed
+
+- Project renamed from "eartrainer" to "InTune Alarm Clock"
+- Split `NoteViewModel` into `NoteSettingsViewModel`, `NoteGameViewModel`, and `NoteGuessingViewModel`
+- `NotePlayer` updated to reuse `NoteEngine` via `setNote(_:)`
+- Playback buttons now visually reflect guess accuracy
+
+### Fixed
+
+- Prevented SoundFont crash fallback in sampler mode
+- Corrected octave bounds synchronization in `SettingsView`
+- Improved note validity checking using expanded `isValid`
+- Optimized sharps filtering by reusing note name arrays
+  
 ## [0.1.1] - 2025-06-23
 
 ### Added
